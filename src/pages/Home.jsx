@@ -28,16 +28,16 @@ function App() {
 
   // diane.fitria+user@gmail.com
 
-    const handleDeposit = () => {
-      // event.preventDefault();
+    const handleDeposit = (event) => {
+      event.preventDefault();
       dispatch(
         deposit(10)
       )
       // alert('123')
     };
 
-    const handleWithdraw = () => {
-      // event.preventDefault();
+    const handleWithdraw = (event) => {
+      event.preventDefault();
       dispatch(
         withdraw(10)
       )
@@ -145,7 +145,7 @@ const data = [
                 logout
               </div>
 
-              <div className='bg-[white] px-2 py-2 font-bold font-DM mt-4' onClick={handleLogout}>
+              <div className='bg-[white] px-2 py-2 font-bold font-DM mt-4'>
              
 
                   <section>

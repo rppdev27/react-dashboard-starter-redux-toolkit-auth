@@ -1,7 +1,7 @@
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../config/redux/authActions';
+import { loginUser } from '../../config/redux/reducers/authSlice';
 
 import axios from 'axios';
 
@@ -19,10 +19,13 @@ function Login(){
     const storeData = useSelector(state => state);
     const location = useLocation();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
     const balance = useSelector(state => state.balance);
+
+    const auth = storeData.auth.isAuthenticated;
+
+    const { isAuthenticated } = useSelector(
+      (state) => state
+    )
 
   // diane.fitria+user@gmail.com
 
@@ -42,7 +45,7 @@ function Login(){
     useEffect(() => {
         // console.log('Current Route:', location.pathname);
         // console.log(storeData);
-        // console.log(balance)
+        // console.log(auth)
     })
 
     const [formData, setFormData] = useState({
@@ -50,10 +53,6 @@ function Login(){
         password: '',
       });
 
-      const [payload, setPayload] = useState({
-        email: '',
-        password: '',
-      });
     
       const handleChange = (e) => {
         setFormData({
@@ -64,7 +63,11 @@ function Login(){
     
       const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loginUser(formData, navigate));
+        // console.log(formData);
+        dispatch(loginUser(formData)).then( Response => {
+          console.log(Response);
+          navigate('/');
+        });
       };
     
     return (
@@ -72,8 +75,9 @@ function Login(){
      <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white shadow-md rounded-md">
         <h2 className="text-3xl font-extrabold text-center text-gray-900">
-          Login <p>$ {balance.total}</p>
-        </h2>
+          {/* Login <p>$ {balance.total}</p> */}
+          {auth}
+          </h2>
         <section>
                   <div
                   onClick={handleDeposit}>Deposit $10</div>
